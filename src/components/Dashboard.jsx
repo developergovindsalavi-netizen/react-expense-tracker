@@ -1,9 +1,11 @@
+import { useState } from "react";
 import SummaryCard from "./SummaryCard";
 import TransactionItem from "./TransactionItem";
+import AddTransaction from "./AddTransaction";
 
 function Dashboard() {
 
-    const transactions = [
+    const [transactions, setTransactions] = useState([
         {
             id: 1,
             title: "Food",
@@ -52,11 +54,20 @@ function Dashboard() {
             amount: 50000,
             type: "income"
         }
-    ];
+    ]);
 
-    const totalExpenses=transactions.filter((item)=>item.type==="expense").reduce((acc, item) => acc + item.amount, 0);
-    const totalIncome=transactions.filter((item)=>item.type==="income").reduce((acc, item) => acc + item.amount, 0);
-    const balance=totalIncome-totalExpenses;
+    function addTransaction(item) {
+        setTransactions([...transactions,
+            item]);
+    }
+
+    function deleteTransaction(id) {
+        setTransactions(transactions.filter((item)=>item.id!==id));
+    }
+
+    const totalExpenses = transactions.filter((item) => item.type === "expense").reduce((acc, item) => acc + item.amount, 0);
+    const totalIncome = transactions.filter((item) => item.type === "income").reduce((acc, item) => acc + item.amount, 0);
+    const balance = totalIncome - totalExpenses;
 
     return (
         <>
@@ -66,13 +77,19 @@ function Dashboard() {
                 <SummaryCard title="Expense" amount={totalExpenses} />
                 <SummaryCard title="Balance" amount={balance} />
             </div>
-            <h3>Recent Transactions</h3>
-            <div className="transaction-list">
-                {
-                    transactions.map((item)=>{
-                        return <TransactionItem key={item.id} title={item.title} amount={item.amount} type={item.type} />
-                    })
-                }
+
+            <div className="transactions-container">
+                <div className="transaction-list">
+                    <h3>Recent Transactions</h3>
+                    {
+                        transactions.map((item) => {
+                            return <TransactionItem onTransactionDelete={deleteTransaction} key={item.id} id={item.id} title={item.title} amount={item.amount} type={item.type} />
+                        })
+                    }
+                </div>
+                <div className="transaction-form-wrapper">
+                    <AddTransaction onAddTransaction={addTransaction} />
+                </div>
             </div>
 
         </>
