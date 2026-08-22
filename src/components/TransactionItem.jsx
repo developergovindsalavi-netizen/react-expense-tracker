@@ -1,8 +1,9 @@
-function TransactionItem({ title, amount }) {
+function TransactionItem({ type,title, amount }) {
     return (
         <div className="transaction-row">
             <span className="transaction-title">{title}</span>
-            <span className="transaction-amount">{amount}</span>
+            {type==="income"?<span className="transaction-amount">{"+₹"+amount}</span>
+            :<span className="transaction-amount">{"-₹"+amount}</span>}
         </div>
     );
 }
