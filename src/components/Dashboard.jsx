@@ -1,68 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SummaryCard from "./SummaryCard";
 import TransactionItem from "./TransactionItem";
 import AddTransaction from "./AddTransaction";
 
 function Dashboard() {
 
-    const [transactions, setTransactions] = useState([
-        {
-            id: 1,
-            title: "Food",
-            amount: 5000,
-            type: "expense"
-        },
-        {
-            id: 2,
-            title: "Shopping",
-            amount: 2000,
-            type: "expense"
-        },
-        {
-            id: 3,
-            title: "Fuel",
-            amount: 1000,
-            type: "expense"
-        },
-        {
-            id: 4,
-            title: "Electricity",
-            amount: 1500,
-            type: "expense"
-        },
-        {
-            id: 5,
-            title: "Internet",
-            amount: 700,
-            type: "expense"
-        },
-        {
-            id: 6,
-            title: "Movie",
-            amount: 500,
-            type: "expense"
-        },
-        {
-            id: 7,
-            title: "Rent",
-            amount: 6000,
-            type: "expense"
-        },
-        {
-            id: 8,
-            title: "Salary",
-            amount: 50000,
-            type: "income"
-        }
-    ]);
+
+    const [transactions, setTransactions] = useState(() => {
+        let localData = localStorage.getItem("transactions");
+
+        return localData
+            ?
+            JSON.parse(localData)
+            : []
+    });
+
+    useEffect(() => {
+        localStorage.setItem(
+            "transactions",
+            JSON.stringify(transactions)
+        );
+    }, [transactions]);
+
+    function clearTransactions() {
+        setTransactions([]);
+    }
+
 
     function addTransaction(item) {
-        setTransactions([...transactions,
-            item]);
+        setTransactions((previousTransactions) => [
+            ...previousTransactions,
+            item
+        ]);
     }
 
     function deleteTransaction(id) {
-        setTransactions(transactions.filter((item)=>item.id!==id));
+        setTransactions((previousTransactions) =>
+            previousTransactions.filter((item) => item.id !== id)
+        );
     }
 
     const totalExpenses = transactions.filter((item) => item.type === "expense").reduce((acc, item) => acc + item.amount, 0);
@@ -77,8 +52,14 @@ function Dashboard() {
                 <SummaryCard title="Expense" amount={totalExpenses} />
                 <SummaryCard title="Balance" amount={balance} />
             </div>
-
+            <button
+                type="button"
+                onClick={clearTransactions}
+            >
+                Clear All Transactions
+            </button>
             <div className="transactions-container">
+
                 <div className="transaction-list">
                     <h3>Recent Transactions</h3>
                     {
