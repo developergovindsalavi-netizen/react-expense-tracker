@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 import TransactionItem from "../components/TransactionItem";
+import useTransactionContext from "../hooks/useTransactionContext";
 
-function TransactionsPage({transactions,
-        deleteTransaction}) {
+function TransactionsPage() {
+
+    const {deleteTransaction, transactions}=useTransactionContext();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [typeFilter, setTypeFilter] = useState("all");

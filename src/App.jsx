@@ -13,19 +13,10 @@ import CategoriesPage from "./pages/CategoriesPage";
 import ReportsPage from "./pages/ReportsPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import useTransactions from './hooks/useTransactions';
-
 
 
 
 function App() {
-
-  const {
-  transactions,
-  clearTransactions,
-  addTransaction,
-  deleteTransaction
-} = useTransactions();
 
   return (
     <BrowserRouter>
@@ -37,14 +28,11 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={<DashboardPage transactions={transactions} deleteTransaction={deleteTransaction}
-                  clearTransactions={clearTransactions}
-                  addTransaction={addTransaction}
-                />}
+                element={<DashboardPage />}
               />
               <Route
                 path="/transactions"
-                element={<TransactionsPage transactions={transactions} deleteTransaction={deleteTransaction} />}
+                element={<TransactionsPage />}
               />
               <Route
                 path="/categories"
