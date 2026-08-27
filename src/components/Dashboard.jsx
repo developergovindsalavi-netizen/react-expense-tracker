@@ -10,8 +10,18 @@ function Dashboard() {
         transactions,
         clearTransactions,
         addTransaction,
-        deleteTransaction
+        deleteTransaction,
+        loading,
+        error
     } = useTransactionContext();
+
+    if (loading) {
+        return <p>Loading transactions...</p>;
+    }
+    if (error) {
+        return <p>{error}</p>;
+    }
+
 
     const totalExpenses = transactions.filter((item) => item.type === "expense").reduce((acc, item) => acc + item.amount, 0);
     const totalIncome = transactions.filter((item) => item.type === "income").reduce((acc, item) => acc + item.amount, 0);

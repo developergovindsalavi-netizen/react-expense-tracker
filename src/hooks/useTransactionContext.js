@@ -5,6 +5,8 @@ import TransactionContext from "../context/TransactionContext";
 function useTransactionContext() {
 
     const {
+        loading,
+        error,
         transactions,
         addTransaction,
         deleteTransaction,
@@ -12,6 +14,8 @@ function useTransactionContext() {
     } = useContext(TransactionContext);
 
     return {
+        loading,
+        error,
         transactions,
         addTransaction,
         deleteTransaction,

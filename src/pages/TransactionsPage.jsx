@@ -5,22 +5,35 @@ import useTransactionContext from "../hooks/useTransactionContext";
 
 function TransactionsPage() {
 
-    const {deleteTransaction, transactions}=useTransactionContext();
+    const { deleteTransaction, transactions, loading,error } = useTransactionContext();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [typeFilter, setTypeFilter] = useState("all");
 
+
+    if (loading) {
+        console.log(loading);
+        return <p>Loading transactions...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
+
     const normalizedSearchTerm = searchTerm.toLowerCase().trim();
 
     const filteredTransactions = transactions
-    .filter((item) =>
-        item.title.toLowerCase().includes(normalizedSearchTerm) ||
-        item.amount.toString().includes(normalizedSearchTerm)
-    )
-    .filter((item) =>
-        typeFilter === "all" ||
-        item.type === typeFilter
-    );
+        .filter((item) =>
+            item.title.toLowerCase().includes(normalizedSearchTerm) ||
+            item.amount.toString().includes(normalizedSearchTerm)
+        )
+        .filter((item) =>
+            typeFilter === "all" ||
+            item.type === typeFilter
+        );
+
+
 
     return (
         <div>

@@ -6,6 +6,7 @@ const TransactionContext = createContext();
 export function TransactionProvider({ children }) {
 
     const {
+        loading,
         transactions,
         clearTransactions,
         addTransaction,
@@ -15,6 +16,7 @@ export function TransactionProvider({ children }) {
     return (
         <TransactionContext.Provider
             value={{
+                loading,
                 transactions,
                 clearTransactions,
                 addTransaction,
