@@ -1,13 +1,19 @@
 
 import SummaryCard from "./SummaryCard";
 
-function Summary({totalIncome,totalExpenses,balance}){
+function Summary({ summaryData }) {
     return <>
-    <div className="card-container">
-                <SummaryCard title="Income" amount={totalIncome} />
-                <SummaryCard title="Expense" amount={totalExpenses} />
-                <SummaryCard title="Balance" amount={balance} />
-            </div>
+        <div className="card-container">
+            {
+                summaryData.map((item) => {
+                    return <SummaryCard
+                        key={item.id}
+                        title={item.title}
+                        amount={item.amount}
+                    />
+                })
+            }
+        </div>
     </>
 }
 

@@ -2,6 +2,9 @@ import { useState } from "react";
 
 import TransactionItem from "../components/TransactionItem";
 import useTransactionContext from "../hooks/useTransactionContext";
+import Loading from "../components/Loading";
+import Button from "../components/Button";
+import EmptyState from "../components/EmptyState";
 
 function TransactionsPage() {
 
@@ -12,8 +15,7 @@ function TransactionsPage() {
 
 
     if (loading) {
-        console.log(loading);
-        return <p>Loading transactions...</p>;
+        return <Loading message="Loading transactions..." />;
     }
 
     if (error) {
@@ -45,12 +47,7 @@ function TransactionsPage() {
                     placeholder="Search Transactions..."
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button
-                    type="button"
-                    onClick={() => setSearchTerm("")}
-                >
-                    Clear Search
-                </button>
+                <Button type={"button"} onClick={() => setSearchTerm("")}>Clear Search</Button>
             </div>
             <div>
                 Type :
@@ -70,10 +67,10 @@ function TransactionsPage() {
                         {
                             transactions.length === 0
                                 ?
-                                <p className="no-transactions">You don't have any transactions yet.</p>
+                                <EmptyState message="You don't have any transactions yet." />
                                 :
                                 filteredTransactions.length === 0
-                                    ? <p className="no-transactions">No transactions found.</p>
+                                    ? <EmptyState message="No transactions found." />
                                     :
                                     filteredTransactions.map((item) => {
                                         return <TransactionItem onTransactionDelete={deleteTransaction} key={item.id} id={item.id} title={item.title} amount={item.amount} type={item.type} />

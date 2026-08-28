@@ -2,11 +2,9 @@ const STORAGE_KEY = "transactions";
 
 function TransactionService() {
 
-    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
     async function getTransactions() {
         let localData = localStorage.getItem(STORAGE_KEY);
-        console.log(localData);
+
         return localData
             ?
             JSON.parse(localData)

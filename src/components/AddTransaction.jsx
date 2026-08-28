@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 function AddTransaction({ onAddTransaction }) {
 
@@ -54,7 +55,7 @@ function AddTransaction({ onAddTransaction }) {
                 <option value="expense">Expense</option>
                 <option value="income">Income</option>
             </select>
-            <button type="submit">Add Transaction</button>
+            <Button type={"submit"}>Add Transaction</Button>
             <p className="validation-summary">{validationMessage}</p>
         </form>
     </>
