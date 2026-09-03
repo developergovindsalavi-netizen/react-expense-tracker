@@ -66,7 +66,6 @@ function TransactionsPage() {
                 </select>
             </div>
             <div>
-                <br />
                 <div className="transactions-container">
                     <div className="transaction-list">
                         {

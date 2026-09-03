@@ -39,6 +39,8 @@ const STORAGE_KEY = "transactions";
             transToUpdate.title=transaction.title;
             transToUpdate.amount=transaction.amount;
             transToUpdate.type=transaction.type;
+            transToUpdate.date=transaction.date;
+            transToUpdate.category=transaction.category;
         }
 
         localStorage.setItem(STORAGE_KEY,JSON.stringify(transactionData));

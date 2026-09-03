@@ -6,15 +6,21 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [type, setType] = useState("");
+    const [date, setDate] = useState("");
+    const [category, setCategory] = useState("");
     const [errors, setErrors] = useState({
         title: "",
         amount: "",
-        type: ""
+        type: "",
+        date: "",
+        category: ""
     });
     const [touched, setTouched] = useState({
         title: false,
         amount: false,
-        type: false
+        type: false,
+        date: false,
+        category: false
     });
     const maxLength = 50;
     const isEditMode = transaction != null;
@@ -25,22 +31,30 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
             setTitle(transaction.title);
             setAmount(String(transaction.amount));
             setType(transaction.type);
+            setDate(transaction.date);
+            setCategory(transaction.category);
         } else {
             setTitle("");
             setAmount("");
             setType("");
+            setDate("");
+            setCategory("");
         }
 
         setErrors({
             title: "",
             amount: "",
-            type: ""
+            type: "",
+            date: "",
+            category: ""
         });
 
         setTouched({
             title: false,
             amount: false,
-            type: false
+            type: false,
+            date: false,
+            category: false
         });
     }, [transaction]);
 
@@ -50,6 +64,22 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
         setErrors(previousErrors => ({
             ...previousErrors,
             title: ""
+        }));
+    }
+    function changeDate(e) {
+        setDate(e.target.value);
+
+        setErrors(previousErrors => ({
+            ...previousErrors,
+            date: ""
+        }));
+    }
+    function changeCategory(e) {
+        setCategory(e.target.value);
+
+        setErrors(previousErrors => ({
+            ...previousErrors,
+            category: ""
         }));
     }
     function changeAmount(e) {
@@ -71,7 +101,9 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
         return {
             title: getTitleError(),
             amount: getAmountError(),
-            type: getTypeError()
+            type: getTypeError(),
+            date: getDateError(),
+            category: getCategoryError()
         };
     }
 
@@ -93,6 +125,12 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
         else if (field === "type") {
             errors.type = getTypeError();
         }
+        else if (field === "date") {
+            errors.date = getDateError();
+        }
+        else if (field === "category") {
+            errors.category = getCategoryError();
+        }
 
         setErrors(previousErrors => ({
             ...previousErrors,
@@ -100,13 +138,15 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
         }));
     }
 
-    function submitForm(e) {
+    async function submitForm(e) {
         e.preventDefault();
 
         setTouched({
             title: true,
             amount: true,
-            type: true
+            type: true,
+            date: true,
+            category: true
         });
 
         const validationErrors = validateForm();
@@ -116,44 +156,57 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
         if (
             validationErrors.title ||
             validationErrors.amount ||
-            validationErrors.type) {
+            validationErrors.type ||
+            validationErrors.category ||
+            validationErrors.date
+        ) {
             return;
         }
 
         if (isEditMode) {
-            onUpdateTransaction({
+            await onUpdateTransaction({
                 id: transaction.id,
                 title: title.trim(),
                 amount: Number(amount),
-                type: type
+                type: type,
+                category : category,
+                date : date
             });
-        
+
             onEditComplete();
         } else {
 
-            onAddTransaction({
+            await onAddTransaction({
                 id: Date.now(),
                 title: title.trim(),
                 amount: Number(amount),
-                type: type
+                type: type,
+                category : category,
+                date : date
             });
         }
 
         setErrors({
             title: "",
             amount: "",
-            type: ""
+            type: "",
+            date: "",
+            category: ""
         });
 
         setTouched({
             title: false,
             amount: false,
-            type: false
+            type: false,
+            category: false,
+            date: false
         });
 
         setTitle("");
         setAmount("");
         setType("");
+        setCategory("");
+        setDate("");
     }
 
     function getTitleError() {
@@ -180,6 +233,18 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
         return "";
     }
 
+    function getCategoryError() {
+        if (category === "") return "Category is mandatory.";
+
+        return "";
+    }
+
+    function getDateError() {
+        if (date === "") return "Date is mandatory.";
+
+        return "";
+    }
+
 
     return <>
         <h3>{isEditMode ? "Edit Transaction" : "Add Transaction"}</h3>
@@ -194,13 +259,31 @@ function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, on
             {touched.amount && errors.amount && (
                 <p className="field-error">{errors.amount}</p>
             )}
+            <input type="date" placeholder="Date" value={date} onChange={changeDate} onBlur={() => validateField("date")} />
+            {touched.date && errors.date && (
+                <p className="field-error">{errors.date}</p>
+            )}
             <select value={type} onChange={changeType} onBlur={() => validateField("type")}>
-                <option value="">Select</option>
+                <option value="">Select Type</option>
                 <option value="expense">Expense</option>
                 <option value="income">Income</option>
             </select>
             {touched.type && errors.type && (
                 <p className="field-error">{errors.type}</p>
+            )}
+            <select value={category} onChange={changeCategory} onBlur={() => validateField("category")}>
+                <option value="">Select Category</option>
+                <option value="Food">Food</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Fuel">Fuel</option>
+                <option value="Bills">Bills</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Rent">Rent</option>
+                <option value="Salary">Salary</option>
+                <option value="Other">Other</option>
+            </select>
+            {touched.category && errors.category && (
+                <p className="field-error">{errors.category}</p>
             )}
             <Button type="submit">
                 {isEditMode ? "Update Transaction" : "Add Transaction"}
