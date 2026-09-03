@@ -5,13 +5,15 @@ import useTransactionContext from "../hooks/useTransactionContext";
 import Loading from "../components/Loading";
 import Button from "../components/Button";
 import EmptyState from "../components/EmptyState";
+import AddTransaction from "../components/AddTransaction";
 
 function TransactionsPage() {
 
-    const { deleteTransaction, transactions, loading,error } = useTransactionContext();
+    const { addTransaction, updateTransaction, deleteTransaction, transactions, loading, error } = useTransactionContext();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [typeFilter, setTypeFilter] = useState("all");
+    const [editingTransaction, setEditingTransaction] = useState(null);
 
 
     if (loading) {
@@ -35,6 +37,9 @@ function TransactionsPage() {
             item.type === typeFilter
         );
 
+    function handleEdit(id) {
+        setEditingTransaction(transactions.find((item) => item.id === id));
+    }
 
 
     return (
@@ -73,11 +78,27 @@ function TransactionsPage() {
                                     ? <EmptyState message="No transactions found." />
                                     :
                                     filteredTransactions.map((item) => {
-                                        return <TransactionItem onTransactionDelete={deleteTransaction} key={item.id} id={item.id} title={item.title} amount={item.amount} type={item.type} />
+                                        return <TransactionItem
+                                            onTransactionDelete={deleteTransaction}
+                                            key={item.id}
+                                            id={item.id}
+                                            title={item.title}
+                                            amount={item.amount}
+                                            type={item.type}
+                                            onTransactionEdit={handleEdit}
+                                        />
                                     })
                         }
                         <br />
                         <p>Showing {filteredTransactions.length} of {transactions.length} transactions</p>
+                    </div>
+                    <div className="transaction-form-wrapper">
+                        <AddTransaction
+                            transaction={editingTransaction}
+                            onAddTransaction={addTransaction}
+                            onUpdateTransaction={updateTransaction} 
+                            onEditComplete={() => setEditingTransaction(null)}
+                            />
                     </div>
                 </div>
             </div>

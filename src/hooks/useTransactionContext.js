@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import TransactionContext from "../context/TransactionContext";
 
-
 function useTransactionContext() {
 
     const {
@@ -10,7 +9,8 @@ function useTransactionContext() {
         transactions,
         addTransaction,
         deleteTransaction,
-        clearTransactions
+        clearTransactions,
+        updateTransaction
     } = useContext(TransactionContext);
 
     return {
@@ -19,7 +19,8 @@ function useTransactionContext() {
         transactions,
         addTransaction,
         deleteTransaction,
-        clearTransactions
+        clearTransactions,
+        updateTransaction
     };
 }
 

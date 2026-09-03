@@ -10,7 +10,8 @@ export function TransactionProvider({ children }) {
         transactions,
         clearTransactions,
         addTransaction,
-        deleteTransaction
+        deleteTransaction,
+        updateTransaction
     } = useTransactions();
 
     return (
@@ -20,7 +21,8 @@ export function TransactionProvider({ children }) {
                 transactions,
                 clearTransactions,
                 addTransaction,
-                deleteTransaction
+                deleteTransaction,
+                updateTransaction
             }}>
             {children}
         </TransactionContext.Provider>

@@ -7,8 +7,9 @@ function useTransactions() {
         getTransactions: getTransactionsApi,
         addTransaction: addTransactionApi,
         deleteTransaction: deleteTransactionApi,
-        clearTransactions: clearTransactionsApi
-    } = TransactionService();
+        clearTransactions: clearTransactionsApi,
+        updateTransaction: updateTransactionApi
+    } = TransactionService;
 
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -37,8 +38,7 @@ function useTransactions() {
 
     }, []);
 
-    async function clearTransactions() {
-
+    async function clearTransactions(){
         try {
             setLoading(true);
             const data = await clearTransactionsApi();
@@ -51,10 +51,9 @@ function useTransactions() {
         finally {
             setLoading(false);
         }
-    }
+    };
 
-    async function addTransaction(item) {
-
+    async function addTransaction(item){
         try {
             setLoading(true);
             const data = await addTransactionApi(item);
@@ -67,9 +66,9 @@ function useTransactions() {
         finally {
             setLoading(false);
         }
-    }
+    };
 
-    async function deleteTransaction(id) {
+    async function deleteTransaction(id){
         try {
             setLoading(true);
             const data = await deleteTransactionApi(id);
@@ -82,7 +81,22 @@ function useTransactions() {
         finally {
             setLoading(false);
         }
-    }
+    };
+
+    async function updateTransaction(transaction){
+        try {
+            setLoading(true);
+            const data = await updateTransactionApi(transaction);
+            setTransactions(data);
+        }
+        catch (error) {
+            console.error("Failed to update transaction", error);
+            setError("Unable to update transaction");
+        }
+        finally {
+            setLoading(false);
+        }
+    };
 
     return {
         loading,
@@ -90,7 +104,8 @@ function useTransactions() {
         transactions,
         addTransaction,
         deleteTransaction,
-        clearTransactions
+        clearTransactions,
+        updateTransaction
     };
 
 }

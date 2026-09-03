@@ -1,6 +1,5 @@
 const STORAGE_KEY = "transactions";
 
-function TransactionService() {
 
     async function getTransactions() {
         let localData = localStorage.getItem(STORAGE_KEY);
@@ -31,19 +30,34 @@ function TransactionService() {
         return newTransactionData;
     }
 
+    async function updateTransaction(transaction) {
+        let transactionData = await getTransactions();
+
+        let transToUpdate = transactionData.find((item) => item.id === transaction.id);
+
+        if(transToUpdate){
+            transToUpdate.title=transaction.title;
+            transToUpdate.amount=transaction.amount;
+            transToUpdate.type=transaction.type;
+        }
+
+        localStorage.setItem(STORAGE_KEY,JSON.stringify(transactionData));
+
+        return transactionData;
+    }
+
     async function clearTransactions() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
         return [];
     }
 
-    return {
-        getTransactions,
-        addTransaction,
-        deleteTransaction,
-        clearTransactions
-    }
-
-}
+const TransactionService = {
+    getTransactions,
+    addTransaction,
+    deleteTransaction,
+    clearTransactions,
+    updateTransaction
+};
 
 
 export default TransactionService;

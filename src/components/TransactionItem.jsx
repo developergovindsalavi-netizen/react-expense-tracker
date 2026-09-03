@@ -3,7 +3,8 @@ function TransactionItem({
     type,
     title,
     amount,
-    onTransactionDelete
+    onTransactionDelete,
+    onTransactionEdit
 }) {
 
     function onDelete() {
@@ -12,20 +13,36 @@ function TransactionItem({
 
     return (
         <div className="transaction-row">
-            <span className="transaction-title">{title}</span>
-            {type === "income"
-                ?
-                <span className="transaction-amount">{"+₹" + amount}</span>
-                :
-                <span className="transaction-amount">{"-₹" + amount}</span>
-            }
+            <span className="transaction-title">
+                {title}
+            </span>
+
+            {type === "income" ? (
+                <span className="transaction-amount">
+                    {"+" + "₹" + amount}
+                </span>
+            ) : (
+                <span className="transaction-amount">
+                    {"-" + "₹" + amount}
+                </span>
+            )}
+
             <button
                 type="button"
                 onClick={onDelete}
             >
-                Delete</button>
+                Delete
+            </button>
+            {onTransactionEdit && (
+    <button
+        type="button"
+        onClick={() => onTransactionEdit(id)}
+    >
+        Edit
+    </button>
+)}
         </div>
     );
-}
+};
 
 export default TransactionItem;

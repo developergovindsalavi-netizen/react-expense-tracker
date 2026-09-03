@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "./Button";
 
-function AddTransaction({ onAddTransaction }) {
+function AddTransaction({ onAddTransaction, transaction, onUpdateTransaction, onEditComplete }) {
 
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
@@ -17,6 +17,32 @@ function AddTransaction({ onAddTransaction }) {
         type: false
     });
     const maxLength = 50;
+    const isEditMode = transaction != null;
+
+
+    useEffect(() => {
+        if (transaction) {
+            setTitle(transaction.title);
+            setAmount(String(transaction.amount));
+            setType(transaction.type);
+        } else {
+            setTitle("");
+            setAmount("");
+            setType("");
+        }
+
+        setErrors({
+            title: "",
+            amount: "",
+            type: ""
+        });
+
+        setTouched({
+            title: false,
+            amount: false,
+            type: false
+        });
+    }, [transaction]);
 
     function changeTitle(e) {
         setTitle(e.target.value);
@@ -94,12 +120,24 @@ function AddTransaction({ onAddTransaction }) {
             return;
         }
 
-        onAddTransaction({
-            id: Date.now(),
-            title: title.trim(),
-            amount: Number(amount),
-            type: type
-        });
+        if (isEditMode) {
+            onUpdateTransaction({
+                id: transaction.id,
+                title: title.trim(),
+                amount: Number(amount),
+                type: type
+            });
+        
+            onEditComplete();
+        } else {
+
+            onAddTransaction({
+                id: Date.now(),
+                title: title.trim(),
+                amount: Number(amount),
+                type: type
+            });
+        }
 
         setErrors({
             title: "",
@@ -143,9 +181,8 @@ function AddTransaction({ onAddTransaction }) {
     }
 
 
-
     return <>
-        <h3>Add Transaction</h3>
+        <h3>{isEditMode ? "Edit Transaction" : "Add Transaction"}</h3>
         <form className="transaction-form" onSubmit={submitForm}>
             <input type="text" maxLength={maxLength} placeholder="Title" value={title} onChange={changeTitle}
                 onBlur={() => validateField("title")} />
@@ -165,7 +202,9 @@ function AddTransaction({ onAddTransaction }) {
             {touched.type && errors.type && (
                 <p className="field-error">{errors.type}</p>
             )}
-            <Button type="submit">Add Transaction</Button>
+            <Button type="submit">
+                {isEditMode ? "Update Transaction" : "Add Transaction"}
+            </Button>
         </form>
     </>
 }

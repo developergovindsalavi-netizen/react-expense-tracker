@@ -63,6 +63,8 @@ function Dashboard() {
             amount: balance
         }
     ]
+
+    
     return (
         <>
             <h2 className="dashboard-title">Dashboard</h2>
