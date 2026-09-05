@@ -9,21 +9,29 @@ import Sidebar from "./components/Sidebar";
 
 import DashboardPage from "./pages/DashboardPage";
 import TransactionsPage from "./pages/TransactionsPage";
-import CategoriesPage from "./pages/CategoriesPage";
 import ReportsPage from "./pages/ReportsPage";
-import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import { useState } from "react";
 
 
 
 function App() {
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <BrowserRouter>
       <div className="site-container">
-        <Header />
+        <Header menuOpen={menuOpen}
+          onMenuClick={() => setMenuOpen(prev => !prev)} />
         <div className="body-wrapper">
-          <aside className="sidebar"><Sidebar /></aside>
+          <aside className={`sidebar ${menuOpen ? "open" : ""}`}><Sidebar onNavigate={() => setMenuOpen(false)} /></aside>
+          {menuOpen && (
+            <div
+              className="mobile-backdrop"
+              onClick={() => setMenuOpen(false)}
+            />
+          )}
           <main className="main-content">
             <Routes>
               <Route
@@ -35,16 +43,8 @@ function App() {
                 element={<TransactionsPage />}
               />
               <Route
-                path="/categories"
-                element={<CategoriesPage />}
-              />
-              <Route
                 path="/reports"
                 element={<ReportsPage />}
-              />
-              <Route
-                path="/settings"
-                element={<SettingsPage />}
               />
               <Route
                 path="*"

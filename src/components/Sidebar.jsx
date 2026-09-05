@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar({onNavigate}) {
     return (
         <ul>
             <li>
                 <NavLink
                     to="/"
+                    onClick={onNavigate}
                     className={({ isActive }) =>
                         isActive ? "active" : ""
                     }
@@ -16,6 +17,7 @@ function Sidebar() {
             <li>
                 <NavLink
                     to="/transactions"
+                    onClick={onNavigate}
                     className={({ isActive }) =>
                         isActive ? "active" : ""
                     }
@@ -23,19 +25,10 @@ function Sidebar() {
                     Transactions
                 </NavLink>
             </li>
-            <li>
-                <NavLink
-                    to="/categories"
-                    className={({ isActive }) =>
-                        isActive ? "active" : ""
-                    }
-                >
-                    Categories
-                </NavLink>
-            </li>
-            <li>
+           <li>
                 <NavLink
                     to="/reports"
+                    onClick={onNavigate}
                     className={({ isActive }) =>
                         isActive ? "active" : ""
                     }
@@ -43,17 +36,6 @@ function Sidebar() {
                     Reports
                 </NavLink>
             </li>
-            <li>
-                <NavLink
-                    to="/settings"
-                    className={({ isActive }) =>
-                        isActive ? "active" : ""
-                    }
-                >
-                    Settings
-                </NavLink>
-            </li>
-
         </ul>
 
 
