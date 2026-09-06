@@ -11,7 +11,7 @@ monthly reports and interactive charts.
 
 ## 🚀 Live Demo
 
-[View Live Demo](YOUR_LIVE_DEMO_URL)
+[View Live Demo](https://react-expense-tracker-taupe.vercel.app/)
 
 ---
 
@@ -36,8 +36,6 @@ monthly reports and interactive charts.
 ### Mobile View
 
 ![Mobile View](./screenshots/mobile.png)
-
-> Screenshots will be added after the final deployment and portfolio cleanup.
 
 ---
 
