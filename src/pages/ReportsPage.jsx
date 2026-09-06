@@ -14,8 +14,10 @@ function ReportsPage() {
     const [selectedMonth, setSelectedMonth] = useState("");
 
     const monthlyTransactions = selectedMonth
-        ? transactions.filter(item => item.date.startsWith(selectedMonth))
-        : [];
+    ? transactions.filter((item) =>
+        item.date.startsWith(selectedMonth)
+    )
+    : [];
 
     const monthlyIncome = monthlyTransactions
         .filter((item) => item.type === "income")
@@ -84,7 +86,7 @@ function ReportsPage() {
                     <>
                         <Summary summaryData={summaryData} />
                         <CategoryReport totalsByCategory={totalsByCategory} />
-                        <br />
+                        <ExpenseCategoryChart totalsByCategory={totalsByCategory} />
                         <MonthlyReport
                             selectedMonth={selectedMonth}
                             onMonthChange={setSelectedMonth}
@@ -93,7 +95,6 @@ function ReportsPage() {
                             monthlyExpenses={monthlyExpenses}
                             monthlyBalance={monthlyBalance}
                         />
-                        <ExpenseCategoryChart totalsByCategory={totalsByCategory} />
                         <MonthlyIncomeExpenseChart transactions={transactions} />
                     </>
             }

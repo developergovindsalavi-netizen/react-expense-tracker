@@ -7,14 +7,20 @@ import {
     Cell
 } from "recharts";
 
+const COLORS = [
+    "#8884d8",
+    "#82ca9d",
+    "#ffc658",
+    "#ff8042",
+    "#0088FE"
+];
+
 function ExpenseCategoryChart({ totalsByCategory }) {
 
     const categoryData = Object.entries(totalsByCategory).map(([name, value]) => ({
         name,
         value
     }));
-
-    const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#0088FE"];
 
     return (
         <div>

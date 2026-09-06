@@ -16,7 +16,11 @@ function MonthlyIncomeExpenseChart({ transactions }) {
             const month = item.date.substring(0, 7);
 
             if (!acc[month]) {
-                acc[month] = { month: month, income: 0, expense: 0 };
+                acc[month] = {
+                    month,
+                    income: 0,
+                    expense: 0
+                };
             }
 
             if (item.type === "income" || item.type === "expense") {

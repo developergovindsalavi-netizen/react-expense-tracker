@@ -7,6 +7,7 @@ export function TransactionProvider({ children }) {
 
     const {
         loading,
+        error,
         transactions,
         clearTransactions,
         addTransaction,
@@ -18,6 +19,7 @@ export function TransactionProvider({ children }) {
         <TransactionContext.Provider
             value={{
                 loading,
+                error,
                 transactions,
                 clearTransactions,
                 addTransaction,

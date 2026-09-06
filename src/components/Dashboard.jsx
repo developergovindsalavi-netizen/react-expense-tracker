@@ -30,7 +30,7 @@ function Dashboard() {
         setShowConfirm(false);
     }
 
-    function setConfirmDialogVisible(){
+    function handleClearAllClick(){
         setShowConfirm(true);
     }
 
@@ -71,13 +71,13 @@ function Dashboard() {
 
             <Summary summaryData={summaryData} />
 
-            <Button type={"button"} onClick={setConfirmDialogVisible}>Clear All Transactions</Button>
+            <Button type={"button"} onClick={handleClearAllClick}>Clear All Transactions</Button>
 
             {
                 showConfirm ?
                 <ConfirmDialog onConfirm={onConfirmCallback} onCancel={onConfirmationCancelCallback} >
                     Are you sure you want to delete all transactions?
-                </ConfirmDialog>:''
+                </ConfirmDialog>:null
             }
 
             <div className="transactions-container">

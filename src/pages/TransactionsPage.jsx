@@ -38,7 +38,13 @@ function TransactionsPage() {
         );
 
     function handleEdit(id) {
-        setEditingTransaction(transactions.find((item) => item.id === id));
+        const transaction = transactions.find(
+            (item) => item.id === id
+        );
+
+        if (transaction) {
+            setEditingTransaction(transaction);
+        }
     }
 
 
@@ -65,40 +71,37 @@ function TransactionsPage() {
                     <option value="expense">Expense</option>
                 </select>
             </div>
-            <div>
-                <div className="transactions-container">
-                    <div className="transaction-list">
-                        {
-                            transactions.length === 0
-                                ?
-                                <EmptyState message="You don't have any transactions yet." />
+            <div className="transactions-container">
+                <div className="transaction-list">
+                    {
+                        transactions.length === 0
+                            ?
+                            <EmptyState message="You don't have any transactions yet." />
+                            :
+                            filteredTransactions.length === 0
+                                ? <EmptyState message="No transactions found." />
                                 :
-                                filteredTransactions.length === 0
-                                    ? <EmptyState message="No transactions found." />
-                                    :
-                                    filteredTransactions.map((item) => {
-                                        return <TransactionItem
-                                            onTransactionDelete={deleteTransaction}
-                                            key={item.id}
-                                            id={item.id}
-                                            title={item.title}
-                                            amount={item.amount}
-                                            type={item.type}
-                                            onTransactionEdit={handleEdit}
-                                        />
-                                    })
-                        }
-                        <br />
-                        <p>Showing {filteredTransactions.length} of {transactions.length} transactions</p>
-                    </div>
-                    <div className="transaction-form-wrapper">
-                        <AddTransaction
-                            transaction={editingTransaction}
-                            onAddTransaction={addTransaction}
-                            onUpdateTransaction={updateTransaction} 
-                            onEditComplete={() => setEditingTransaction(null)}
-                            />
-                    </div>
+                                filteredTransactions.map((item) => {
+                                    return <TransactionItem
+                                        onTransactionDelete={deleteTransaction}
+                                        key={item.id}
+                                        id={item.id}
+                                        title={item.title}
+                                        amount={item.amount}
+                                        type={item.type}
+                                        onTransactionEdit={handleEdit}
+                                    />
+                                })
+                    }
+                    <p className="transaction-count">Showing {filteredTransactions.length} of {transactions.length} transactions</p>
+                </div>
+                <div className="transaction-form-wrapper">
+                    <AddTransaction
+                        transaction={editingTransaction}
+                        onAddTransaction={addTransaction}
+                        onUpdateTransaction={updateTransaction}
+                        onEditComplete={() => setEditingTransaction(null)}
+                    />
                 </div>
             </div>
         </div>

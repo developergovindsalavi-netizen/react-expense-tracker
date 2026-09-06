@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-function Sidebar({onNavigate}) {
+function Sidebar({ onNavigate }) {
     return (
         <ul>
             <li>

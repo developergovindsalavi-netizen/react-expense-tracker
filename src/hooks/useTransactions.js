@@ -19,8 +19,9 @@ function useTransactions() {
 
 
         async function loadTransactions() {
-
+            
             try {
+                setError("");
                 const data = await getTransactionsApi();
 
                 setTransactions(data);
@@ -36,11 +37,13 @@ function useTransactions() {
 
         loadTransactions();
 
-    }, []);
+    }, [])
 
-    async function clearTransactions(){
+    async function clearTransactions() {
         try {
             setLoading(true);
+            setError("");
+
             const data = await clearTransactionsApi();
             setTransactions(data);
         }
@@ -51,11 +54,13 @@ function useTransactions() {
         finally {
             setLoading(false);
         }
-    };
+    }
 
-    async function addTransaction(item){
+    async function addTransaction(item) {
         try {
             setLoading(true);
+            setError("");
+
             const data = await addTransactionApi(item);
             setTransactions(data);
         }
@@ -66,11 +71,13 @@ function useTransactions() {
         finally {
             setLoading(false);
         }
-    };
+    }
 
-    async function deleteTransaction(id){
+    async function deleteTransaction(id) {
         try {
             setLoading(true);
+            setError("");
+
             const data = await deleteTransactionApi(id);
             setTransactions(data);
         }
@@ -81,11 +88,13 @@ function useTransactions() {
         finally {
             setLoading(false);
         }
-    };
+    }
 
-    async function updateTransaction(transaction){
+    async function updateTransaction(transaction) {
         try {
             setLoading(true);
+            setError("");
+            
             const data = await updateTransactionApi(transaction);
             setTransactions(data);
         }
@@ -96,7 +105,7 @@ function useTransactions() {
         finally {
             setLoading(false);
         }
-    };
+    }
 
     return {
         loading,
@@ -106,7 +115,7 @@ function useTransactions() {
         deleteTransaction,
         clearTransactions,
         updateTransaction
-    };
+    }
 
 }
 

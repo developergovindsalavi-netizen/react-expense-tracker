@@ -1,16 +1,108 @@
-# React + Vite
+# Expense Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive personal finance tracking application built with React.
 
-Currently, two official plugins are available:
+The application allows users to manage income and expense transactions,
+search and filter records, edit and delete transactions, persist data
+using browser localStorage, and analyze financial activity through
+monthly reports and interactive charts.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+[View Live Demo](YOUR_LIVE_DEMO_URL)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📸 Screenshots
+
+### Dashboard
+
+![Dashboard](./screenshots/dashboard.png)
+
+### Transactions
+
+![Transactions](./screenshots/transactions.png)
+
+### Edit Transaction
+
+![Edit Transaction](./screenshots/edit-transaction.png)
+
+### Reports
+
+![Reports](./screenshots/reports.png)
+
+### Mobile View
+
+![Mobile View](./screenshots/mobile.png)
+
+> Screenshots will be added after the final deployment and portfolio cleanup.
+
+---
+
+## ✨ Features
+
+- Add income and expense transactions
+- Edit existing transactions
+- Delete transactions
+- Search transactions by title or amount
+- Filter transactions by income or expense
+- Persist transactions using browser localStorage
+- Dashboard with:
+  - Total income
+  - Total expenses
+  - Current balance
+- Expense breakdown by category
+- Monthly financial reports
+- Expense category pie chart
+- Monthly income vs expense bar chart
+- Responsive mobile navigation
+- Mobile sidebar/drawer with backdrop
+- Loading state handling
+- Empty state handling
+- Error state handling
+- Form validation
+- Accessible mobile navigation using ARIA attributes
+
+---
+
+## 🛠️ Tech Stack
+
+- React
+- JavaScript
+- React Router
+- Context API
+- Custom Hooks
+- Recharts
+- CSS
+- Vite
+- Browser localStorage
+
+---
+
+## 🏗️ Architecture
+
+The application separates presentation, shared state, transaction logic,
+and data persistence.
+
+
+                        React Application
+                               │
+                               ▼
+                         Pages / Components
+                               │
+                               ▼
+                   useTransactionContext
+                               │
+                               ▼
+                     TransactionContext
+                               │
+                               ▼
+                       useTransactions
+                               │
+                               ▼
+                    TransactionService
+                               │
+                               ▼
+                         localStorage
