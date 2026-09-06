@@ -19,23 +19,23 @@ monthly reports and interactive charts.
 
 ### Dashboard
 
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](./Screenshots/dashboard.png)
 
 ### Transactions
 
-![Transactions](./screenshots/transactions.png)
+![Transactions](./Screenshots/transactions.png)
 
 ### Edit Transaction
 
-![Edit Transaction](./screenshots/edit-transaction.png)
+![Edit Transaction](./Screenshots/edit-transaction.png)
 
 ### Reports
 
-![Reports](./screenshots/reports.png)
+![Reports](./Screenshots/reports.png)
 
 ### Mobile View
 
-![Mobile View](./screenshots/mobile.png)
+![Mobile View](./Screenshots/mobile.png)
 
 ---
 
